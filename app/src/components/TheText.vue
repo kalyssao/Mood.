@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Predicted mood: {{ mood }}</h3>
+        <h3>Predicted mood: {{ prediction }}</h3>
         <b-button @click="generateMedia">Recommend!</b-button>
     </div>
 </template>
@@ -10,30 +10,35 @@ import axios from 'axios'
 
 export default {
     name: 'RwvText',
-    data () {
-        return {
-            mood: "",
-            music: [],
-            movies: []
+    props: {
+        prediction: {
+            type: String,
+            required: true
         }
     },
-
     methods: {
-        async generateMedia () {
-            try {
-                res = await axios.post(
-                    'http://localhost:4040/generate-media', {
-                        query: `{ 
-                            getMusic {
-                                name
-                                cover
-                            }
-                        }`
+        generateMedia() {
+            let self = this
+            axios.get('http://localhost:5000/recommend', {
+                params: {
+                    mood: this.prediction
+                }
+            })
+            .then(function (response) {
+                // we expect a json of 5 playlists, which we need to pass 
+                // to the track/results component
+                console.log(response.data.playlists.items)
+                //var res = response.data.body
+                self.$router.push({
+                    name: 'Recommendations',
+                    params: {
+                        playlists: response.data.playlists.items
+                    }
                 })
-                this.music = res.data.data
-            } catch (e) {
-                console.log('err', e)
-            }
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
         }
     }
 }

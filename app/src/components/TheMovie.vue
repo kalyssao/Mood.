@@ -8,14 +8,17 @@
 
 <script>
 export default {
-    name: 'RwvMovie',
-    data() {
-        return  {
-            title: '',
-            duration: '',
-            overview: ''
+    props: {
+        title: {
+            type: String,
+            required: true
+        },
+        description: {
+            type: String,
+            required: true
         }
-    }
+    },
+    name: 'RwvMovie',
 }
 </script>
 
