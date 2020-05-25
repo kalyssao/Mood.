@@ -1,19 +1,25 @@
 <template>
-  <div class="about">
-    
+  <div class="results-list">
+    <RwvPlaylist :playlists=playlists></RwvPlaylist>
   </div>
 </template>
 
 
 <script>
 import RwvMovie from '@/components/TheMovie.vue'
-import RwvSong from '@/components/TheSong.vue'
+import RwvPlaylist from '@/components/ThePlaylist.vue'
 
 export default {
   name: "Recommendations",
+  props: {
+    playlists: {
+      type: Array,
+      required: true
+    }
+  },
   components: {
     RwvMovie,
-    RwvSong
+    RwvPlaylist
   }
 }
 </script>

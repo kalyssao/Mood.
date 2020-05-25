@@ -1,33 +1,41 @@
-const express = require('express')
-const { graphql, buildSchema } = require('graphql')
-const graphqlHTTP = require('express-graphql')
-const cors = require('cors')
+var express = require('express');
+var app = express();
 
-/*
-express and express-graphql lets us respond to HTTP requests
-buildSchema is used to define the types 
-cors lets us make requests from our Vue app (8080), to the server (4000)
-*/
-//  schema — what types of queries and types the server will use
-const schema = buildSchema(`
-    type Query {
-        language: String
-    }
-`)
-// an error will be thrown if language doesnt return a string 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 
-// Resolver - Graph API endpoint which responds to all requests
-const rootValue = {
-    language: () => 'GraphQL'
-}
+var SpotifyWebApi = require('spotify-web-api-node')
 
-const app = express()
-app.use(cors())
+var client_id = '9d583449efba428abdccef4978f3f87a'
+var client_secret = '70629c95044a4d79901a0ff48a87d9e5'
 
-// API route called by the client request - returns using the rootValue whatever
-// value is requested
-app.use('/graphql', graphqlHTTP({
-    rootValue, schema, graphiql: true
-}))
+var spotifyApi = new SpotifyWebApi({
+    clientId: client_id,
+    clientSecret: client_secret
+});
 
-app.listen(4000, () => console.log("listening on port 4000"))
+spotifyApi.clientCredentialsGrant()
+    .then(function(data) {
+        spotifyApi.setAccessToken(data.body['access_token']);
+    })
+    .catch(function(err) {
+        console.log('Something went wrong when retrieving an access token', err.message);
+    })
+
+app.get('/recommend', function(request, response) {
+    console.log(request.body)
+    var mood = "happy"
+    spotifyApi.searchPlaylists(mood, { limit: 5 })
+        .then(function(data) {
+            response.send(data.body)
+        })
+        .catch (function(err) {
+            console.error(err)
+        })
+})
+
+var listener = app.listen(5000, function () {
+    console.log('Your app is listening on port ' + 5000)
+})
