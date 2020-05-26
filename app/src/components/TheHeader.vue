@@ -13,3 +13,7 @@ export default {
   name: 'RwvHeader',
 };
 </script>
+
+<style lang="stylus" scoped>
+
+</style>

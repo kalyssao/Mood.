@@ -1,7 +1,17 @@
 <template>
-    <div>
-        <h3>Predicted mood: {{ prediction }}</h3>
-        <b-button @click="generateMedia">Recommend!</b-button>
+    <div class="wrapper">
+        <div class="child">
+            <div class="prediction">
+                <b-row>
+                    <b-col sm="9">
+                        <h1>You are {{ prediction }}</h1>
+                    </b-col>
+                    <b-col sm="3">
+                        <b-button variant="light" style="padding: 15px;" block squared @click="generateMedia">Recommend!</b-button>
+                    </b-col>
+                </b-row>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -45,5 +55,19 @@ export default {
 </script>
 
 <style>
+.wrapper {
+    text-align: center;
+}
+
+.child {
+    width: 50rem;
+    height: 10rem;
+    background-color: white;
+    display: inline-block;
+}
+
+.prediction {
+    padding: 50px;
+}
 
 </style>
