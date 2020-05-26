@@ -1,20 +1,23 @@
 <template>
-    <div>
-        Title: {{ title }}
-        Duration: {{ duration }}
-        Overview: {{ overview }}
+    <div class="card-deck">
+        <li v-for="movie in movies"
+        :key="movie.title">
+            <b-card
+            :img-src=movie.poster_path
+            :title=movie.original_title
+            style="max-width: 15rem;">
+                <p>{{ movie.runtime }}</p>
+                <p>{{ movie.overview }}</p>
+            </b-card>
+        </li>
     </div>
 </template>
 
 <script>
 export default {
     props: {
-        title: {
-            type: String,
-            required: true
-        },
-        description: {
-            type: String,
+        movies: {
+            type: Array,
             required: true
         }
     },
