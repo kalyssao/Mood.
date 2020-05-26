@@ -1,6 +1,12 @@
 <template>
   <div class="results-list">
-    <RwvPlaylist :playlists=playlists></RwvPlaylist>
+    <b-container>
+      <b-row>
+        <b-col>
+          <RwvPlaylist :playlists=playlists></RwvPlaylist>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
