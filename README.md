@@ -1,6 +1,6 @@
 # Mood.
-🥺 A mood-based media recommendation application.
+💃🏾 A mood-based media recommendation application.
 
-Built with VueJS, Express & Microsoft Azure Face.
+Built with VueJS, Express & TensorFlow.
 
-Processes a user's face through the webcam, determines the most relevant emotion, and recommends music and movie content through calls to the Spotify & The MovieDB APIs - powered by GraphQL.
+Processes a user's face through the webcam, determines the most relevant emotion, and recommends playlists through calls to the Spotify Web API.
