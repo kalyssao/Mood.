@@ -26,10 +26,13 @@ export default {
             required: true
         },
     },
-    name: 'RwvPlaylist',
+    name: 'RwvPlaylist'
 }
 </script>
 
 <style>
+.wrapper {
+    background-color: black;
+}
 
 </style>
