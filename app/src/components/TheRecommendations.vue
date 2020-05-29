@@ -30,7 +30,11 @@ export default {
     },
     // On mount, use the mood prop to get the list
     // of playlists (which is then passed to the Playlist component)
-    mounted: function () {
+    watch: {
+
+    },
+    created: function () {
+        console.log(this.props)
         var self = this
         axios.get('http://localhost:5000/recommend', {
             params: {
