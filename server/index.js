@@ -28,7 +28,7 @@ app.get('/recommend', function(request, response) {
     // from when the mood is sent via the payload
     //console.log(request.body)
     var mood = "happy"
-    spotifyApi.searchPlaylists(mood, { limit: 4 })
+    spotifyApi.searchPlaylists(mood, { limit: 10 })
         .then(function(data) {
             response.send(data.body)
         })
