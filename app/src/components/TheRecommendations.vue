@@ -12,8 +12,8 @@
 
 
 <script>
+import axios from 'axios'; 
 import RwvPlaylist from '@/components/ThePlaylist.vue'
-import axios from 'axios'
 
 export default {
     name: "RwvRecommendations",
@@ -23,43 +23,36 @@ export default {
             required: true
         }
     },
+    components: {
+        RwvPlaylist
+    },
     data() {
         return {
             playlists: []
         }
     },
-    // On mount, use the mood prop to get the list
-    // of playlists (which is then passed to the Playlist component)
+    // Watch for a change in the mood prop from the parent component
+    // then make an axios call to the spotify API - before we tried mounted but couldn't access the value -_-
     watch: {
-
-    },
-    created: function () {
-        console.log(this.props)
-        var self = this
-        axios.get('http://localhost:5000/recommend', {
-            params: {
-            mood: this.props.mood
-            }
-        })
-        .then(function (response) {
-            // we expect a json of 5 playlists, which we need to pass 
-            // to the playlists component
-            console.log(response.data.playlists.items)
-            this.playlists = response.data.playlists.items
-            //var res = response.data.body
-            /*self.$router.push({
-            name: 'Home',
-            params: {
-            playlists: response.data.playlists.items
-                    }
-                })*/
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
-    },
-    components: {
-        RwvPlaylist
+        mood: function (newMood) {
+            var self = this
+            console.log(`watch triggered, new value of mood is: ${newMood}`)
+            axios.get('http://localhost:5000/recommend', {
+                params: {
+                    mood: newMood
+                }
+            })
+            // use arrow functions because callbacks change the scope (this)
+            .then((response) => {
+                // we expect a json of 5 playlists, which we need to pass 
+                // to the playlists component
+                console.log(response.data.playlists.items)
+                this.playlists = response.data.playlists.items
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
     }
 }
 </script>
