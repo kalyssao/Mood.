@@ -70,3 +70,10 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+RwvRecommendations {
+    max-height: 720px;
+    overflow-y: scroll;
+}
+</style>
