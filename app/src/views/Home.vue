@@ -27,16 +27,13 @@ import RwvText from '@/components/TheText.vue';
 import RwvRecommendations from '@/components/TheRecommendations.vue';
 
 import * as tf from '@tensorflow/tfjs';
-import * as mobilenetModule from '@tensorflow-models/mobilenet';
-import * as knnClassifier from '@tensorflow-models/knn-classifier';
+import * as faceapi from 'face-api.js';
 
 export default {
     name: 'Home',
     data () {
         return {
             mood: "",
-            classifier: null,
-            mobilenet: null,
             class: null,
             playlists: []
         }
@@ -51,17 +48,18 @@ export default {
     },
     methods: {
         async init(){
-            // load the load mobilenet and create a KnnClassifier
-            this.classifier = knnClassifier.create();
-            this.mobilenet = await mobilenetModule.load();
+            // load the face detection api
+            await faceapi.loadSsdMobilenetv1Model('/models')
+            await faceapi.loadFaceExpressionModel('/models')
         },
         async getEmotion() {
-            console.log('getting emotion..')
-            /*const img = tf.FromPixels(this.$children[0].webcam.webcamElement)
-            const logits = this.mobilenet.infer(img, 'conv_preds')
-            const pred = await this.classifier.predictClass(logits)
-            this.detected_e = this.emotions[pred.classIndex];
-            this.setMood(detected_e)*/
+            console.log('getting face from face api..')
+            const img = tf.browser.fromPixels(this.$children[0].webcam.webcamElement)
+            const detectionsWithExpressions = await faceapi.detectSingleFace(img)
+            
+            console.log(detectionsWithExpressions)
+            //this.detected_e = this.emotions[pred.classIndex];
+            //this.setMood(detected_e)*/
             this.setMood('happy')
         },
         setMood(mood) {
