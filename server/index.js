@@ -45,3 +45,5 @@ app.get('/recommend', function(request, response) {
 var listener = app.listen(5000, function () {
     console.log('Your app is listening on port ' + 5000)
 })
+
+module.exports = app
