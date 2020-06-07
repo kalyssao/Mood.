@@ -73,7 +73,6 @@ export default {
             var self = this
             const image = this.$children[0].webcam.webcamElement
             const canvas = faceapi.createCanvasFromMedia(image)
-            console.log("image", image)
 
             const userExpression = await faceapi.detectSingleFace(image).withFaceLandmarks().withFaceExpressions();
             if(typeof userExpression !== undefined) {

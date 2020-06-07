@@ -39,7 +39,7 @@ export default {
     watch: {
         mood: function (newMood) {
             var self = this
-            console.log(`watch triggered, new value of mood is: ${newMood}`)
+            //console.log(`watch triggered, new value of mood is: ${newMood}`)
             axios.get('http://localhost:5000/recommend', {
                 params: {
                     mood: newMood
@@ -49,7 +49,6 @@ export default {
             .then((response) => {
                 // we expect a json of 5 playlists, which we need to pass 
                 // to the playlists component
-                console.log(response.data.playlists.items)
                 this.playlists = response.data.playlists.items
             })
             .catch((error) => {
