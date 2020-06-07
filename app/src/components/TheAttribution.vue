@@ -1,10 +1,9 @@
 <template>
     <div>
         <div class="attribution">
-                A learning project built by <a target="blank" href="http://kalyssao.github.io">Lyss</a>.
-                Code &amp; design licensed under MIT.
+                A learning project built by <a id="owner" target="blank" href="http://kalyssao.github.io">The Lyss</a>.
                 <br>
-            Powered by <img style="max-width: 60px;" src="@/assets/tmdb.svg">
+            Powered by <a href="https://www.themoviedb.org/"><img id="tmdb" src="@/assets/tmdb.svg"></a> & <a href="https://developer.spotify.com/"><img id="spotify" src="@/assets/spotify.png"></a>
         </div>
     </div>
 </template>
@@ -19,4 +18,13 @@ export default {
 .attribution {
     padding-bottom: 20px;
 }
+
+#tmdb  {
+    max-width: 60px;
+}
+
+#spotify {
+    max-width: 25px;
+}
+
 </style>

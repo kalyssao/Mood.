@@ -3,14 +3,18 @@
         <div class="playlists">
             <li v-for="playlist in playlists"
             :key="playlist.name">
-                <div class="image">
-                    <img style=" float:left; max-width: 5rem; margin-right: 15px;" :src="playlist.images[0].url">
-                </div>
-                <div class="content">
-                    <h5>{{ playlist.name }}</h5>
+                <div class="playlist-item">
+                    <div class="image">
+                        <a :href=playlist.external_urls.spotify> <img style=" float:left; max-width: 5rem; margin-right: 15px;" :src="playlist.images[0].url"> </a>
+                    </div>
+                    <div class="content">
+                        <a :href="playlist.external_urls.spotify">
+                            <h5>{{ playlist.name }}</h5>
+                        </a>
                     <!--<img id="playlist-img" src="@/assets/spotify.png">
                     <a :href=playlist.external_urls.spotify>Open In Spotify</a>-->    
-                    <p>{{ playlist.description }}</p>
+                        <p>{{ playlist.description }}</p>
+                    </div>
                 </div>
             </li>
         </div>
@@ -32,7 +36,18 @@ export default {
 <style>
 .playlist-item {
     width: 100%
+    border
 }
+
+a {
+    color: black !important;
+    text-decoration: none !important; 
+}
+
+a :hover {
+    text-decoration-color: black;
+}
+
 #playlist-img {
     display: block;
     max-width: 5%;

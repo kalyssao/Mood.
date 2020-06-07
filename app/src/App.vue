@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <RwvHeader />
+      <b-row>
+        <b-col md="1"></b-col>
+        <b-col sm="5">
+            <RwvHeader />
+        </b-col>
+      </b-row>
     <router-view></router-view>
     <RwvFooter />
   </div>
@@ -41,4 +46,5 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
 </style>
