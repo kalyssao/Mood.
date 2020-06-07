@@ -46,9 +46,6 @@ export default {
 </script>
 
 <style>
-    body {
-        background-color: #F0F0F0;
-    }
     #app {
         text-align: center;
         color: #2c3e50;
