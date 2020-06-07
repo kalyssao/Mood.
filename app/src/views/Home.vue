@@ -3,7 +3,7 @@
     <b-row> 
       <b-col md="1"> </b-col>
       <b-col md="5">
-        <RwvCamera @moodPredicted="setMood($event)"/>
+        <RwvCamera @pictureTaken="setImage($event)"/>
         <b-button squared variant="dark" id="snap" v-on:click="getEmotion()"> Snap.</b-button>
         </b-col>
       <b-col md="1"></b-col>
@@ -41,7 +41,8 @@ export default {
             class: null,
             playlists: [],
             faceModel: null,
-            emotionModel: null
+            emotionModel: null,
+            image: null
         }
     },
     components: {
@@ -58,23 +59,42 @@ export default {
 
             // load the face detection api & emotion detection model
             await faceapi.loadSsdMobilenetv1Model('/models/features/')
+            await faceapi.loadFaceLandmarkModel('/models/features')
             await faceapi.loadFaceExpressionModel('/models/features')
             
             this.emotionModel = await tf.loadLayersModel('/models/emotion/model.json')
             
         },
-        async getEmotion() {
-            
+        async getImage() {
             var self = this
-            console.log('getting face from face api..')
+            
+        },
+        async getEmotion() {
+            var self = this
+            const image = this.$children[0].webcam.webcamElement
+            const canvas = faceapi.createCanvasFromMedia(image)
+            console.log("image", image)
 
-            //const img = tf.browser.fromPixels(this.$children[0].webcam.webcamElement)
+            const userExpression = await faceapi.detectSingleFace(image).withFaceLandmarks().withFaceExpressions();
+            if(typeof userExpression !== undefined) {
+                var expression = Object.keys(userExpression.expressions).reduce(function(a, b){ return userExpression.expressions[a] > userExpression.expressions[b] ? a : b })
+            } else {
+                console.log('new photo!')
+            }
+
+
+            /*const image = await this.$children.webcam.webCamElement.capture()
+            // const img = tf.browser.fromPixels(this.$children[0].webcam.webcamElement)
+            // returns a 3d tensor
             const img = tf.browser.fromPixels(this.$children[0].webcam.webcamElement)
-            console.log(img)
+            const img2 = tf.stack([img])
+            const img3 = this.$children[0].webcam.webcamElement
+            console.log(img2)
+            console.log(img3)
             //const input = await faceapi.toNetInput(img, false, true)
-            const detectionsWithExpressions = await faceapi.detectSingleFace(img).withFaceExpressions()
+            const detectionsWithExpressions = await faceapi.detectSingleFace(image).withFaceExpressions()
             console.log(detectionsWithExpressions)
-            /*const detections = await faceapi.ssdMobilenetv1(input, params)
+            const detections = await faceapi.ssdMobilenetv1(input, params)
             //const detections = results.map(r => r.faceDetection)
             console.log(input)
 
@@ -83,13 +103,19 @@ export default {
             
             const output = await this.emotionModel.classify(face)
             console.log(output)
-            //this.setMood('happy')*/
+            */
+           this.setMood(expression)
             
         },
         setMood(mood) {
             console.log('mood detected, ', mood)
             var self = this
             this.mood = mood
+        },
+        setImage(image) {
+            console.log('picture taken')
+            var self = this
+            this.image = image
         }
     }
 };

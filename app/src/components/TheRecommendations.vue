@@ -1,11 +1,14 @@
 <template>
   <div class="results-list">
     <b-container>
-      <b-row>
-        <b-col>
-          <RwvPlaylist :playlists=playlists></RwvPlaylist>
-        </b-col>
-      </b-row>
+        <b-row>
+            <b-col sm="12"><h5 class="text-left">Top Recommendations</h5></b-col>
+        </b-row>
+        <b-row>
+            <b-col>
+                <RwvPlaylist :playlists=playlists></RwvPlaylist>
+            </b-col>
+        </b-row>
     </b-container>
   </div>
 </template>
@@ -58,5 +61,9 @@ export default {
 </script>
 
 <style>
+.results-list {
+    max-height: 400px;
+    overflow: scroll;
+}
 
 </style>

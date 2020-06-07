@@ -31,14 +31,15 @@ tokenRefreshInterval = setInterval(newToken, 1000 * 60 * 60);
 
 app.get('/recommend', function(request, response) {
     // from when the mood is sent via the payload
-    //console.log(request.body)
-    var mood = "happy"
-    spotifyApi.searchPlaylists(mood, { limit: 10 })
+    console.log(request.query.mood)
+    var mood = request.query.mood
+    spotifyApi.searchPlaylists(mood, { limit: 9 })
         .then(function(data) {
             response.send(data.body)
         })
         .catch (function(err) {
             console.error(err)
+            response.send(err.statusCode)
         })
 })
 

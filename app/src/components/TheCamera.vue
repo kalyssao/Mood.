@@ -32,6 +32,13 @@ export default {
         loadWebCam: function () {
             this.webcam = new Webcam(document.getElementById('webcam'))
             this.webcam.setup();
+        },
+        async getImage() {
+            const img = await webcam.capture();
+            const processedImg =
+                tf.tidy(() => img.expandDims(0).toFloat().div(127).sub(1));
+            img.dispose();
+            return processedImg;
         }
     },
 };

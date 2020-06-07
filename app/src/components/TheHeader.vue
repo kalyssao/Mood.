@@ -5,7 +5,6 @@
                 <h2> Mood. </h2>
                 <p> A media recommendation engine. </p>
             </router-link>
-            
         </div>
     </nav>
 </template>

@@ -4,9 +4,9 @@
             <div class="prediction">
                 <b-row>
                     <b-col sm="12">
-                        <h4 class="text-left">Your Mood is</h4>
+                        <h5 class="text-left">You are...</h5>
                         <br>
-                        <h3>{{ prediction }}</h3>
+                        <h4 id="predicted-mood" class="text-left">{{ emoji[prediction] }}</h4>
                     </b-col>
                 </b-row>
             </div>
@@ -22,14 +22,16 @@ export default {
             type: String,
             required: true
         }
+    },
+    data() {
+        return {
+            emoji: {happy: '😁', sad: '☹️', neutral: '😐', angry: '😡', surprised: '😲'}
+        }
     }
 }
 </script>
 
 <style>
-.wrapper {
-    text-align: center;
-}
 
 .child {
     width: 50rem;
@@ -39,7 +41,11 @@ export default {
 }
 
 .prediction {
-    padding: 50px;
+    padding: 10px;
+}
+
+#predicted-mood {
+    padding-left: 10%;
 }
 
 </style>
