@@ -13,7 +13,7 @@ var SpotifyWebApi = require('spotify-web-api-node')
 var spotifyApi = new SpotifyWebApi({
     clientId: client_id,
     clientSecret: client_secret,
-    redirectUri: 'localhost:8080/#/home'
+    redirectUri: 'https://d2xbojkowr794t.cloudfront.net/'
 });
 
 function newToken() {

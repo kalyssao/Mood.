@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "deploy": "aws s3 sync ./dist s3://your-bucket-name",
+    "deploy": "aws s3 sync ./dist s3://vue-mood-client",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
