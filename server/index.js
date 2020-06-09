@@ -1,5 +1,8 @@
 var express = require('express');
+const cors = require('cors')
 var app = express();
+
+app.use(cors())
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -13,7 +16,7 @@ var SpotifyWebApi = require('spotify-web-api-node')
 var spotifyApi = new SpotifyWebApi({
     clientId: client_id,
     clientSecret: client_secret,
-    redirectUri: 'localhost:8080/#/home'
+    redirectUri: 'https://d2xbojkowr794t.cloudfront.net/'
 });
 
 function newToken() {
@@ -31,7 +34,6 @@ tokenRefreshInterval = setInterval(newToken, 1000 * 60 * 60);
 
 app.get('/recommend', function(request, response) {
     // from when the mood is sent via the payload
-    console.log(request.query.mood)
     var mood = request.query.mood
     spotifyApi.searchPlaylists(mood, { limit: 9 })
         .then(function(data) {
