@@ -5,8 +5,11 @@ Built with VueJS, Express & the TensorFlow.js powered face-api.js.
 
 Processes a user's face through the webcam, determines the most relevant emotion, and recommends playlists through calls to the Spotify Web API.
 
+<<<<<<< HEAD
 ## Demo
 ![Mood Demo](https://github.com/kalyssao/Mood./app/src/assets/demo.gif)
+=======
+>>>>>>> 66f850cd8307dac4f9ddb9dffe4a048d86d81765
 
 Helpful resources!
 1. [face-Api.js](https://github.com/justadudewhohacks/face-api.js)
