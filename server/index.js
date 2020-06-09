@@ -4,11 +4,6 @@ var app = express();
 
 app.use(cors())
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-});
-
 var client_id = '9d583449efba428abdccef4978f3f87a'
 var client_secret = '70629c95044a4d79901a0ff48a87d9e5'
 
@@ -45,8 +40,8 @@ app.get('/recommend', function(request, response) {
         })
 })
 
-var listener = app.listen(5000, function () {
+/*var listener = app.listen(5000, function () {
     console.log('Your app is listening on port ' + 5000)
-})
+})*/
 
 module.exports = app
