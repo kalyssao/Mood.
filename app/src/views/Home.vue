@@ -107,7 +107,6 @@ export default {
             
         },
         setMood(mood) {
-            console.log('mood detected, ', mood)
             var self = this
             this.mood = mood
         },

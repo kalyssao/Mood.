@@ -39,8 +39,7 @@ export default {
     watch: {
         mood: function (newMood) {
             var self = this
-            //console.log(`watch triggered, new value of mood is: ${newMood}`)
-            axios.get('https://wsx6y0dvog.execute-api.us-east-1.amazonaws.com/dev/recommend', {
+            axios.get(process.env.VUE_APP_PROD_SERVER, {
                 params: {
                     mood: newMood
                 }
