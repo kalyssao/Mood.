@@ -1,6 +1,6 @@
 <template>
     <div>
-        Oops. There was a problem
+        <h3>Oops. There was a problem</h3>
         <router-link :to="{ name: 'Home' }">Back To Home</router-link>
     </div>
 </template>

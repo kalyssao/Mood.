@@ -7,6 +7,10 @@
         <b-row>
             <b-col>
                 <RwvPlaylist :playlists=playlists></RwvPlaylist>
+                <b-modal ref="api-modal" centered>
+                    Mood. couldn't suggest playlists 😔 
+                    <br> Would you mind retrying?
+                </b-modal>
             </b-col>
         </b-row>
     </b-container>
@@ -23,7 +27,7 @@ export default {
     props: {
         mood: {
             type: String,
-            required: true
+            required: false
         }
     },
     components: {
@@ -38,6 +42,9 @@ export default {
     // then make an axios call to the spotify API - before we tried mounted but couldn't access the value -_-
     watch: {
         mood: function (newMood) {
+            if (typeof newMood === "undefined") {
+                return
+            }
             var self = this
             axios.get(process.env.VUE_APP_PROD_SERVER, {
                 params: {
@@ -51,7 +58,7 @@ export default {
                 this.playlists = response.data.playlists.items
             })
             .catch((error) => {
-                console.log(error)
+                this.$refs['api-modal'].show()
             })
         }
     }

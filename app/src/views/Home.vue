@@ -1,23 +1,29 @@
 <template>
-  <div class="home">
-    <b-row> 
-      <b-col md="1"> </b-col>
-      <b-col md="5">
-        <RwvCamera @pictureTaken="setImage($event)"/>
-        <b-button squared variant="dark" id="snap" v-on:click="getEmotion()"> Snap.</b-button>
-        </b-col>
-      <b-col md="1"></b-col>
-      <b-col md="4">
-        <b-row>
-          <RwvText v-bind:prediction="mood"></RwvText>
-        </b-row>
-        <b-row>
-          <RwvRecommendations :mood=mood></RwvRecommendations>
-        </b-row>
-      </b-col>
-      <b-col md="1"></b-col>
-    </b-row>
-  </div>
+  <b-overlay :show="show" rounded="sm">
+    <div class="home">
+            <b-row> 
+            <b-col md="1"> </b-col>
+            <b-col md="5">
+                <RwvCamera @pictureTaken="setImage($event)"/>
+                <b-button squared variant="dark" id="snap" v-on:click="setLoading();getEmotion()"> Snap.</b-button>
+            </b-col>
+            <b-col md="1"></b-col>
+            <b-col md="4">
+                <b-row>
+                <RwvText v-bind:prediction="mood"></RwvText>
+                </b-row>
+                <b-row>
+                <RwvRecommendations :mood=mood></RwvRecommendations>
+                </b-row>
+            </b-col>
+            <b-col md="1"></b-col>
+            </b-row>
+            <b-modal class="show" ref="error-modal" centered ok-only title="" fade show>
+                Mood. didn't detect a face ☹️ 
+                <br> Could you try again?
+            </b-modal>
+    </div>
+  </b-overlay>
 </template>
 
 <script>
@@ -42,7 +48,8 @@ export default {
             playlists: [],
             faceModel: null,
             emotionModel: null,
-            image: null
+            image: null,
+            show: false
         }
     },
     components: {
@@ -65,20 +72,21 @@ export default {
             this.emotionModel = await tf.loadLayersModel('/models/emotion/model.json')
             
         },
-        async getImage() {
-            var self = this
-            
+        setLoading() {
+            this.show = true
         },
         async getEmotion() {
             var self = this
-            const image = this.$children[0].webcam.webcamElement
+            const image = this.$children[0].$children[0].webcam.webcamElement
             const canvas = faceapi.createCanvasFromMedia(image)
 
             const userExpression = await faceapi.detectSingleFace(image).withFaceLandmarks().withFaceExpressions();
-            if(typeof userExpression !== undefined) {
-                var expression = Object.keys(userExpression.expressions).reduce(function(a, b){ return userExpression.expressions[a] > userExpression.expressions[b] ? a : b })
+            if(typeof userExpression === 'undefined') {
+                this.show = false
+                this.$refs['error-modal'].show()
             } else {
-                console.log('new photo!')
+                this.show = false
+                var expression = Object.keys(userExpression.expressions).reduce(function(a, b){ return userExpression.expressions[a] > userExpression.expressions[b] ? a : b })
             }
 
 
@@ -123,5 +131,10 @@ export default {
 RwvRecommendations {
     max-height: 720px;
     overflow-y: scroll;
+    border: black;
+}
+
+#modal {
+    opacity: 0.5 !important;
 }
 </style>
